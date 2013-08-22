@@ -61,6 +61,12 @@ if(!defined('OSTADMININC') || !$thisstaff || !$thisstaff->isAdmin() || !$config)
                 &nbsp;&nbsp;<em>(System administrator's email)</em> 
             </td>
         </tr>
+        <tr>
+            <td width="180">Allow HTML format:</td>
+            <td>
+                <input type="checkbox" name="allow_html_format" <?php echo $config['allow_html_format'] ? 'checked="checked"':''; ?>>
+            </td>
+        </tr>
         <tr><th colspan=2><em><strong>Incoming Emails</strong>: For mail fetcher (polling) to work you must set an external cron job or enable auto-cron polling</em></th>
         <tr>
             <td width="180">Email Polling:</td>

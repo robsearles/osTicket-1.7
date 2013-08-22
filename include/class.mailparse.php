@@ -148,12 +148,18 @@ class Mail_Parse {
         $body='';
         if(!($body=$this->getPart($this->struct,'text/plain'))) {
             if(($body=$this->getPart($this->struct,'text/html'))) {
+                $body = preg_replace('/(<style.*?>*.<\/style>)/s', '', $body);			//strip style tags!
+                if (preg_match('/<body.*?>(.*)<\/body>/s', $body, $match))
+                    $body = $match[1];
+                /*
                 //Cleanup the html.
                 $body=str_replace("</DIV><DIV>", "\n", $body);
                 $body=str_replace(array("<br>", "<br />", "<BR>", "<BR />"), "\n", $body);
                 $body=Format::safe_html($body); //Balance html tags & neutralize unsafe tags.
+                */
             }
         }
+
         return $body;
     }
 
@@ -202,7 +208,8 @@ class Mail_Parse {
             $file=array(
                     'name'  => $filename,
                     'type'  => strtolower($part->ctype_primary.'/'.$part->ctype_secondary),
-                    'data'  => $this->mime_encode($part->body, $part->ctype_parameters['charset'])
+                    //'data'  => $this->mime_encode($part->body, $part->ctype_parameters['charset'])
+                    'data'  => $part->body
                     );
 
             if(!$this->decode_bodies && $part->headers['content-transfer-encoding'])
