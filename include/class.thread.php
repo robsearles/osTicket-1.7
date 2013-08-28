@@ -543,7 +543,8 @@ Class ThreadEntry {
             .' ,thread_type='.db_input($vars['type'])
             .' ,ticket_id='.db_input($vars['ticketId'])
             .' ,title='.db_input(Format::sanitize($vars['title'], true))
-            .' ,body='.db_input(Format::sanitize($vars['body'], true))
+            //.' ,body='.db_input(Format::sanitize($vars['body'], true))
+            .' ,body='.db_input(Format::sanitize($vars['body'], false))
             .' ,staff_id='.db_input($vars['staffId'])
             .' ,poster='.db_input($vars['poster'])
             .' ,source='.db_input($vars['source']);

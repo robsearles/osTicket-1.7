@@ -165,18 +165,29 @@ class Format {
     function display($text) {
         global $cfg;
 
-        //make urls clickable.
-        if($cfg && $cfg->clickableURLS() && $text)
-            $text=Format::clickableurls($text);
-
-        //Wrap long words...
-        $text=preg_replace_callback('/\w{75,}/',
-            create_function(
-                '$matches',                                     # nolint
-                'return wordwrap($matches[0],70,"\n",true);'),  # nolint
-            $text);
-
-        return nl2br($text);
+        if ($cfg->config['allow_html_format'] == 0) {
+            //html emails need to be changed to plain text on-the-fly
+            $text = str_replace("</DIV><DIV>", "\n", $text);
+            $text = str_replace(array("<br>", "<br />", "<BR>", "<BR />"), "\n", $text);
+            $text = Format::sanitize($text, true); //Balance html tags & neutralize unsafe tags.
+            
+            //make urls clickable.
+            if($cfg && $cfg->clickableURLS() && $text)
+                $text=Format::clickableurls($text);
+            
+            //Wrap long words...
+            $text=preg_replace_callback('/\w{75,}/',
+                                        create_function(
+                                            '$matches',                                     # nolint
+                                            'return wordwrap($matches[0],70,"\n",true);'),  # nolint
+                                        $text);
+            $text = Format::stripEmptyLines($text);
+            $text = nl2br($text);
+            
+        } elseif (!preg_match('/<.*?>/', $text)) {		//no html tags?
+            $text = nl2br($text);
+        }
+        return $text;
     }
 
     function striptags($var, $decode=true) {

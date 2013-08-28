@@ -726,6 +726,7 @@ class Config {
             .',enable_auto_cron='.db_input(isset($vars['enable_auto_cron'])?1:0)
             .',enable_mail_polling='.db_input(isset($vars['enable_mail_polling'])?1:0)
             .',strip_quoted_reply='.db_input(isset($vars['strip_quoted_reply'])?1:0)
+            .',allow_html_format='.db_input(isset($vars['allow_html_format'])?1:0)
             .',reply_separator='.db_input($vars['reply_separator'])
             .' WHERE id='.db_input($this->getId());
 
