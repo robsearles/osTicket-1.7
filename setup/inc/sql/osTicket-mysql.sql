@@ -145,7 +145,6 @@ CREATE TABLE `%TABLE_PREFIX%config` (
   `allow_online_attachments` tinyint(1) unsigned NOT NULL default '0',
   `allow_online_attachments_onlogin` tinyint(1) unsigned NOT NULL default 
     '0',
-  `allow_html_format` TINYINT( 1 ) NOT NULL DEFAULT '0',
   `random_ticket_ids` tinyint(1) unsigned NOT NULL default '1',
   `log_level` tinyint(1) unsigned NOT NULL default '2',
   `log_graceperiod` int(10) unsigned NOT NULL default '12',

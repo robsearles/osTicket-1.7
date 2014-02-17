@@ -338,17 +338,22 @@ class MailFetcher {
     }
 
     function getBody($mid) {
-
+$rob = "=======\n-= GETBODY =-\n";
         $body ='';
-        if(!($body = $this->getPart($mid,'TEXT/PLAIN', $this->charset))) {
+        //if(!($body = $this->getPart($mid,'TEXT/PLAIN', $this->charset))) {
+//$rob .= "NO TEXT\n";
             if(($body = $this->getPart($mid,'TEXT/HTML', $this->charset))) {
+$rob .= "YES HTML\n";
                 //Convert tags of interest before we striptags
                 $body=str_replace("</DIV><DIV>", "\n", $body);
                 $body=str_replace(array("<br>", "<br />", "<BR>", "<BR />"), "\n", $body);
                 $body=Format::safe_html($body); //Balance html tags & neutralize unsafe tags.
             }
+        else {
+		$body = $this->getPart($mid,'TEXT/PLAIN', $this->charset);
         }
-
+$rob .= "$body\n\n================\n";
+file_put_contents("/tmp/rob.mail.txt", $rob, FILE_APPEND);
         return $body;
     }
 

@@ -1269,7 +1269,6 @@ class Ticket {
     //Insert message from client
     function postMessage($vars, $origin='', $alerts=true) {
         global $cfg;
-
         //Strip quoted reply...on emailed replies
         if(!strcasecmp($origin, 'Email')
                 && $cfg->stripQuotedReply()
@@ -1875,9 +1874,10 @@ class Ticket {
         }
         $fields['priorityId']   = array('type'=>'int',      'required'=>0, 'error'=>'Invalid Priority');
         $fields['phone']        = array('type'=>'phone',    'required'=>0, 'error'=>'Valid phone # required');
-
         if(!Validator::process($fields, $vars, $errors) && !$errors['err'])
             $errors['err'] ='Missing or invalid data - check the errors and try again';
+
+
 
         //Make sure phone extension is valid
         if($vars['phone_ext'] ) {
