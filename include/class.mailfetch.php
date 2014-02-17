@@ -338,17 +338,17 @@ class MailFetcher {
     }
 
     function getBody($mid) {
-
         $body ='';
-        if(!($body = $this->getPart($mid,'TEXT/PLAIN', $this->charset))) {
+        //if(!($body = $this->getPart($mid,'TEXT/PLAIN', $this->charset))) {
             if(($body = $this->getPart($mid,'TEXT/HTML', $this->charset))) {
                 //Convert tags of interest before we striptags
                 $body=str_replace("</DIV><DIV>", "\n", $body);
                 $body=str_replace(array("<br>", "<br />", "<BR>", "<BR />"), "\n", $body);
                 $body=Format::safe_html($body); //Balance html tags & neutralize unsafe tags.
             }
+        else {
+		$body = $this->getPart($mid,'TEXT/PLAIN', $this->charset);
         }
-
         return $body;
     }
 

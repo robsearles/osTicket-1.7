@@ -538,7 +538,7 @@ Class ThreadEntry {
         //Must have...
         if(!$vars['ticketId'] || !$vars['type'] || !in_array($vars['type'], array('M','R','N')))
             return false;
-
+$rob = "=============\n".$vars['body']."\n";
         $sql=' INSERT INTO '.TICKET_THREAD_TABLE.' SET created=NOW() '
             .' ,thread_type='.db_input($vars['type'])
             .' ,ticket_id='.db_input($vars['ticketId'])
@@ -548,7 +548,8 @@ Class ThreadEntry {
             .' ,staff_id='.db_input($vars['staffId'])
             .' ,poster='.db_input($vars['poster'])
             .' ,source='.db_input($vars['source']);
-
+$rob .= "sql = $sql\n------------";
+file_put_contents("/tmp/rob.email.txt", $rob, FILE_APPEND);
         if(isset($vars['pid']))
             $sql.=' ,pid='.db_input($vars['pid']);
 

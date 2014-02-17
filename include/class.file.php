@@ -316,6 +316,11 @@ class AttachmentChunkedData {
         for (;;) {
             $block = substr($what, $offset, $chunk_size);
             if (!$block) break;
+            /*
+						if (!db_query('REPLACE INTO '.FILE_CHUNK_TABLE
+                    .' SET filedata=0x'.bin2hex($block).', file_id='
+                    .db_input($this->_file).', chunk_id='.db_input($this->_pos++)))
+            */
             $sql = "";
             if (!db_query('INSERT INTO '.FILE_CHUNK_TABLE
                           .' SET filedata=\''.addslashes($block).'\', file_id='

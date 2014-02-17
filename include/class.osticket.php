@@ -220,6 +220,11 @@ class osTicket {
 
 
     function alertAdmin($subject, $message, $log=false) {
+	// don't send email alerts, just log
+	if($log) {
+		$this->log(LOG_CRIT, $subject, $message, false); //Log the entry...and make sure no alerts are resent.
+	}
+	return;
 
         //Set admin's email address
         if(!($to=$this->getConfig()->getAdminEmail()))
